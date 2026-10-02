@@ -1,0 +1,35 @@
+apiVersion: apps/v1
+kind: Deployment
+
+metadata:
+  name: nginx-devops-app
+
+spec:
+  replicas: 2
+
+  selector:
+    matchLabels:
+      app: nginx-devops-app
+
+  template:
+    metadata:
+      labels:
+        app: nginx-devops-app
+
+    spec:
+      imagePullSecrets:
+        - name: ghcr-secret
+      containers:
+        - name: nginx-devops-app
+          image: ghcr.io/sneha-maria/nginx-devops-app:latest
+
+          ports:
+            - containerPort: 80
+
+          resources:
+            requests:
+              cpu: "50m"
+              memory: "64Mi"
+            limits:
+              cpu: "250m"
+              memory: "128Mi"
